@@ -4,8 +4,7 @@
 <br>
 2022-5-15 更新下 无法加载表情
 今天进行测试的时候发现我的输入框表情无法加载出来，然后排查了下问题，发现我之前用的那个CDN 加速器域名换了，在文章之前使用的是这个  
-'''
-    <link rel="stylesheet" type="text/css"
-          href="http://cdn.bootcdn.net/ajax/libs/emojione/2.1.1/assets/sprites/emojione.sprites.css">
-'''
+> <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/emojione/2.1.1/assets/sprites/emojione.sprites.css">  
+> 后面这个开源网站的域名换了所以需要重新写过: <link rel="stylesheet" type="text/css"      href="http://cdn.bootcdn.net/ajax/libs/emojione/2.1.1/assets/sprites/emojione.sprites.css">
+
 
