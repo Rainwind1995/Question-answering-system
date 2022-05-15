@@ -7,4 +7,8 @@
 > <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/emojione/2.1.1/assets/sprites/emojione.sprites.css">  
 > 后面这个开源网站的域名换了所以需要重新写过: <link rel="stylesheet" type="text/css"      href="http://cdn.bootcdn.net/ajax/libs/emojione/2.1.1/assets/sprites/emojione.sprites.css">
 
+```
+<link rel="stylesheet" type="text/css"      href="http://cdn.bootcdn.net/ajax/libs/emojione/2.1.1/assets/sprites/emojione.sprites.css">
+```
+
 
