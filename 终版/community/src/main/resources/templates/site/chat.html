@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<!--suppress ALL-->
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>聊天 - 光年(Light Year Admin)后台管理系统模板</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="https://static.nowcoder.com/images/logo_87_87.png"/>
+    <meta name="keywords" content="LightYear,光年,后台模板,后台管理系统,光年HTML模板">
+    <meta name="description" content="LightYear是一个基于Bootstrap v3.3.7的后台管理系统的HTML模板。">
+    <meta name="author" content="yinqi">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/global.css}"/>
+    <link th:href="@{/css/materialdesignicons.min.css}" rel="stylesheet">
+    <link th:href="@{/css/chat.css}" rel="stylesheet">
+    <link th:href="@{/css/style.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="nk-container">
+
+    <!-- 头部 -->
+    <header class="bg-dark sticky-top" th:replace="index::header">
+        <div class="container">
+            <!-- 导航 -->
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <!-- logo -->
+                <a class="navbar-brand" href="#"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- 功能 -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item ml-3 btn-group-vertical">
+                            <a class="nav-link" th:href="@{/index}">首页</a>
+                        </li>
+                        <li class="nav-item ml-3 btn-group-vertical" th:if="${loginUser != null}">
+                            <a class="nav-link position-relative" href="site/letter.html">消息<span
+                                    class="badge badge-danger">12</span></a>
+                        </li>
+                        <li class="nav-item ml-3 btn-group-vertical" th:if="${loginUser == null}">
+                            <a class="nav-link" th:href="@{/register}">注册</a>
+                        </li>
+                        <li class="nav-item ml-3 btn-group-vertical" th:if="${loginUser == null}">
+                            <a class="nav-link" th:href="@{/login}">登录</a>
+                        </li>
+                        <li class="nav-item ml-3 btn-group-vertical dropdown" th:if="${loginUser!=null}">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img th:src="${loginUser.headerUrl}" class="rounded-circle" style="width:30px;"/>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item text-center" href="site/profile.html">个人主页</a>
+                                <a class="dropdown-item text-center" th:href="@{/user/setting}">账号设置</a>
+                                <a class="dropdown-item text-center" th:href="@{/logout}">退出登录</a>
+                                <div class="dropdown-divider"></div>
+                                <span class="dropdown-item text-center text-secondary"
+                                      th:utext="${loginUser.username}">nowcoder</span>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- 搜索 -->
+                    <form class="form-inline my-2 my-lg-0" action="site/search.html">
+                        <input class="form-control mr-sm-2" type="search" aria-label="Search"/>
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">搜索</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!--End 头部信息-->
+
+    <!--页面主要内容-->
+    <div class="lyear-chat-room">
+        <!-- 左部 -->
+        <div>
+            <aside class="lyear-chat-side">
+                <div class="lyear-chat-my-box clearfix">
+                    <div class="lyear-chat-my-info pull-left clearfix">
+                        <img th:src="${user.headerUrl}" id="img" class="chat-user-avatar img-circle">
+                        <div class="lyear-chat-my-wrap m-l-10">
+                            <p class="m-b-0" th:utext="${user.username}">笔下光年</p>
+                            <p class="m-0 small text-muted my-autograph" title="点击可编辑">笔尖流淌逝去的光年...</p>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <div class="dropdown">
+                            <a href="#!" data-toggle="dropdown" class="text-default">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                     stroke-linejoin="round" data-toggle="tooltip" title=""
+                                     data-original-title="个人设置">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a href="#!"><i class="mdi mdi-account-plus"></i>添加好友</a></li>
+                                <li><a href="#!"><i class="mdi mdi-message"></i>发起群聊</a></li>
+                                <li><a href="#!"><i class="mdi mdi-share-variant"></i>分享</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="lyear-chat-search">
+                    <div class="has-feedback feedback-left">
+                        <input type="text" placeholder="输入关键词，回车搜索" class="form-control" name="keywords"
+                               id="keywords"/>
+                        <span class="mdi mdi-account form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="lyear-chat-sidebar-scroll lyear-need-scroll">
+                    <div class="list-group lyear-chat-users" th:each="map:${conversations}">
+                        <a href="#" class="list-group-item active" th:data-user-id="${map.conversation.conversationId}"
+                           data-autograph="力大无穷的娃娃">
+                            <span class="pull-left user-status-success">
+                              <img th:src="${map.target.headerUrl}" alt="" class="img-circle chat-user-avatar m-r-10">
+                            </span>
+                            <div class="list-chat-user-info clearfix">
+                                <h4 class="list-chat-user-name pull-left" th:utext="${map.target.username}">大娃</h4>
+                                <span class="badge pull-right" th:utext="${map.unreadCount}" th:if="${map.unreadCount}">3</span>
+                                <span class="float-right text-muted font-size-12"
+                                      th:text="${#dates.format(map.conversation.createTime, 'yyyy-MM-dd HH:mm')}">2019-04-28 14:13:25</span>
+                            </div>
+                            <p class="list-chat-user-text" th:utext="${map.conversation.content}">您知道的有点多啊</p>
+                            <!--最后一条聊天数据-->
+                        </a>
+                    </div>
+                </div>
+                <button class="lyear-chat-toggler"></button>
+            </aside>
+        </div>
+
+        <!--右部-->
+        <div>
+            <section id="lyear-chat-content">
+                <!--data-user-id默认第一个好友的id值，切换时修改-->
+                <header id="lyear-chat-header" data-user-id="1">
+                    <ul class="lyear-chat-menu clearfix">
+                        <li class="lyear-chat-user-info pull-left clearfix">
+                            <img src="images/users/avatar-1.png" class="chat-user-avatar img-circle"/>
+                            <div class="m-l-10 lyear-chat-user-wrap">
+                                <p class="m-b-0" id="friend-name">大娃</p>
+                                <p class="m-0 small text-muted" id="friend-text">力大无凶...</p>
+                            </div>
+                        </li>
+                        <li class="pull-right lyear-chat-tools">
+                            <a href="#!" id="clear-all" data-toggle="tooltip" title="清屏"><i
+                                    class="mdi mdi-delete-empty"></i></a>
+                            <a href="#!" id="history-message" data-toggle="tooltip" title="历史消息"><i
+                                    class="mdi mdi-history"></i></a>
+                        </li>
+                    </ul>
+                </header>
+                <div class="lyear-chat-container">
+                    <div class="lyear-chat-wrapper lyear-need-scroll">
+                        <!--显示默认第一个好友的记录，id中-1为第一个好友的id值-->
+                        <div class='lyear-chat-message-list' id="chat-by-1">
+                            <div class='lyear-chat-message lyear-chat-message-recipient clearfix'>
+                                <img class='chat-user-avatar img-circle'  src='images/users/avatar-1.png'/>
+                                <div class='lyear-chat-message-wrapper'>
+                                    <div class='lyear-chat-message-content'>
+                                        <p>嗨，您有没有兴趣资助我们的新项目！</p>
+                                    </div>
+                                    <div class='lyear-message-details'>
+                                        <span class='chat-today small'>2017/5/23 11:02:53</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <footer id="lyear-chat-footer">
+                            <form class="form-horizontal lyear-chat-form" onsubmit="return false;">
+                                <ul class="lyear-chat-expression list-inline">
+                                    <li class="emoj-box"><a href="#!"> <i class="mdi mdi-emoticon"></i> </a></li>
+<!--                                    <li class="upload-box file-group">-->
+<!--                                        <a href="#!"> <i class="mdi mdi-image file-browser"></i>-->
+<!--                                            <input type="file" class="hide" accept="image/*" multiple> </a>-->
+<!--                                    </li>-->
+                                </ul>
+                                <div class="form-group m-10 lyear-chat-send-box">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="lyear-chat-comment"
+                                               placeholder="输入信息...">
+                                        <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default btn-sender"><i
+                                                class="mdi mdi-telegram"></i></button>
+                                    </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </footer>
+
+                </div>
+            </section>
+        </div>
+
+    </div>
+    <!--End 页面主要内容-->
+
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/perfect-scrollbar.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.qqFace.js}"></script>
+<script type="text/javascript" th:src="@{/js/main.min.js}"></script>
+<!--加载全局变量  CONTEXT_PATH-->
+<script th:src="@{/js/global.js}"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function (e) {
+        // 滚动条
+        if ($('.lyear-need-scroll')[0]) {
+            $('.lyear-need-scroll').each(function () {
+                new PerfectScrollbar(this, {
+                    swipeEasing: false,
+                    suppressScrollX: true
+                });
+            });
+        }
+
+        // 清屏
+        $('#clear-all').on('click', function () {
+            $('.lyear-chat-wrapper').find('.lyear-chat-message-list:visible').html('');
+        });
+
+        // 历史消息点击选中
+        $('body').on('click', '.history-message-item', function () {
+            $(this).addClass('active').siblings().removeClass('active');
+        });
+
+        // 历史消息分页操作(这里只是做拉取历史消息演示，不指定聊天对方的ID)
+        $('body').on('click', '.history-messages-pages li:not(.disabled) a', function () {
+            var $url = $(this).data('url');
+            var $listHtml = $('<div class="history-messages-list" />');
+            var $modalObj = $('#historyModal');
+
+            jQuery.get($url).done(function (res) {
+                var res = eval('(' + res + ')');
+                var message = res.data,
+                    tips = res.msg;
+
+                $modalObj.find('.history-messages-pages').html(res.pages);
+
+                if (200 == res.code) {
+                    $.each(message, function (index, value) {
+                        var className = value.type == 'recipient' ? 'history-message-recipient' : 'history-message-sender';
+
+                        $msgHtml = "<div class='history-message-item " + className + "'>" +
+                            "  <small>" + value.name + "(" + value.time + ")</small>" +
+                            "  <p>" + value.msg + "</p>" +
+                            "</div>";
+
+                        $listHtml.append($msgHtml);
+                    });
+                } else {
+                    console.log(tips);
+                }
+            }).fail(function () {
+                console.log('服务器错误');
+            });
+
+            $modalObj.find('.history-messages-box').html($listHtml).hide().fadeIn('slow');
+        });
+
+        // 点击聊天
+        $('.lyear-chat-users').find('.list-group-item').on('click', function () {
+            var $this = $(this), $chatWrapper = $('.lyear-chat-wrapper');
+            $this.addClass('active').siblings().removeClass('active');
+            var friendId = $this.data('user-id'),
+                friendName = $this.find('.list-chat-user-name').text(),
+                friendText = $this.data('autograph'),
+                friendImg = $this.find('.chat-user-avatar').attr('src');
+
+
+            $('.lyear-chat-user-info').find('.chat-user-avatar').attr('src', friendImg);
+            $('#friend-name').text(friendName);
+            $('#friend-text').text(friendText);
+            $('#lyear-chat-header').attr('data-user-id', friendId);
+
+            var $thisChat = $chatWrapper.find('#chat-by-' + friendId);
+
+            if ($thisChat.length > 0) {
+                $thisChat.fadeIn('slow').siblings().hide();
+                // 存在，如果有新消息，可追加新消息内容
+            } else {
+                // 不存在，则拉取最近的五条聊天记录并添加聊天内容框
+                var $listHtml = $('<div class="lyear-chat-message-list" id="chat-by-' + friendId + '" />');
+                $.get(CONTEXT_PATH + "/chat/detail/" + friendId, {"conversationId": friendId}).done(function (res) {
+                    var res = eval('(' + res + ')');
+                    var target = res.target, chats = res.chats, user = res.user;
+                    if (res.code == 0) {
+                        $.each(chats, function (index, value) {
+                            // 决定消息显示的左右方向
+                            var className = value.letter.toId == user.id ? 'lyear-chat-message-recipient' : 'lyear-chat-message-sender';
+                            $msgHtml = "<div class='lyear-chat-message clearfix " + className + "'>" +
+                                "  <img class='chat-user-avatar img-circle' src='" + value.fromUser.headerUrl + "' />" +
+                                "  <div class='lyear-chat-message-wrapper'>" +
+                                "    <div class='lyear-chat-message-content'>" +
+                                "      <p>" + value.letter.content + "</p>" +
+                                "    </div>" +
+                                "    <div class='lyear-message-details'> <span class='chat-today small'>" + getLocalTime(value.letter.createTime) + "</span> </div>" +
+                                "  </div>" +
+                                "</div>";
+                            $listHtml.append($msgHtml);
+                        });
+                    }
+                }).fail(function () {
+                    console.log('服务器错误');
+                });
+
+                $chatWrapper.find('.lyear-chat-message-list').hide();
+                $chatWrapper.append($listHtml).hide().fadeIn('slow');
+            }
+            $this.find('.badge').remove();
+            $chatWrapper.animate({scrollTop: $chatWrapper[0].scrollHeight}, 500);
+        });
+
+        // 绑定表情
+        $('.emoj-box').qqFace({
+            id: 'facebox', //表情ID
+            assign: 'lyear-chat-comment', //赋予到具体位置
+        });
+
+        // 表情替换
+        var replace_face = function (str) {
+            return str.replace(/\[em_([0-9]*)\]/g, "<img src=\"/community/img/face/$1.png\" />");
+        };
+
+        // 发送消息(这里只发送到聊天内容中)
+        $('.btn-sender').on('click', function (e) {
+            clickBtnSend();
+        });
+
+        // 回车发送消息
+        $('#lyear-chat-comment').keydown(function (event) {
+            if (event.keyCode == 13) {
+                clickBtnSend();
+            }
+        });
+
+        // 发送消息通用方法
+        let clickBtnSend = function () {
+            let friendId = $('#lyear-chat-header').data('user-id');
+            // 获取发送消息
+            let message = replace_face($('#lyear-chat-comment').val());
+
+            // 获取 发送目标用户名
+            let toName = $('#friend-name').text();
+
+
+
+            if (message.length <= 0) {
+                alert('发送消息不能为空');
+                return false;
+            }
+
+            // 调用发送消息函数
+            sendMessage(toName, friendId, message, 'text');
+
+            // 清空输入框
+            $('#lyear-chat-comment').val('');
+        };
+
+        // 发送消息通用方法
+        let sendMessage = function (toName, friendId, message, type) {
+            let $chatBox = $('#chat-by-' + friendId),
+                date = new Date(),
+                year = date.getFullYear(),
+                month = date.getMonth() + 1;
+            day = date.getDate();
+            hours = date.getHours(),
+                minutes = date.getMinutes(),
+                seconds = date.getSeconds(),
+                datetime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds,
+                $msghtml = '';
+
+            // 获取当前发送消息用户头像
+            let userImage = $('#img').attr('src')
+
+            if (type == 'file') {
+                // 附件
+            } else {
+                $.post(
+                    // 请求路径
+                    CONTEXT_PATH + "/letter/send",
+                    // 请求内容
+                    {"toName": toName, "content": message},
+                    // 回调
+                    function (data) {
+                        // 将数据转为json 格式
+                        data = $.parseJSON(data);
+                        console.log(data)
+
+                        if (data.code == 0) {
+                            // 文字
+                            $msghtml = '<div class="lyear-chat-message clearfix lyear-chat-message-sender">' +
+                                // '  <img class="chat-user-avatar img-circle" src="images/users/avatar.jpg" />' + // 当前用户头像
+                                "  <img class='chat-user-avatar img-circle' src='" + userImage + "' />" +
+                                '  <div class="lyear-chat-message-wrapper">' +
+                                '    <div class="lyear-chat-message-content">' +
+                                '      <p>' + message + '</p>' +
+                                '    </div>' +
+                                '    <div class="lyear-message-details"> <span class="chat-today small">' + datetime + '</span> </div>' +
+                                '  </div>' +
+                                '</div>';
+                        }
+                        // 追加内容
+                        $chatBox.append($msghtml);
+                    }
+                ).fail(function () {
+                    console.log('服务器错误');
+                });
+
+
+            }
+            // 将滚动条置为底部
+            $chatBox.parent('.lyear-chat-wrapper').animate({scrollTop: $('.lyear-chat-wrapper')[0].scrollHeight}, 300);
+        };
+
+        // 图片发送
+        $(document).on('click', '.file-browser', function () {
+            let $browser = $(this);
+            let file = $browser.closest('.file-group').find('[type="file"]');
+
+            file.on('click', function (e) {
+                e.stopPropagation();
+            });
+            file.trigger('click');
+            file.change(function () {
+                var files = this.files,
+                    friendId = $('#lyear-chat-header').data('user-id');
+
+                $.each(files, function (index, val) {
+                    if (/image/.test(val.type)) {
+                        var reader = new FileReader();
+                        reader.readAsDataURL(val);
+                        reader.onload = function (e) {
+                            var imgHtml = $('<img />');
+                            imgHtml.attr("src", this.result);
+
+                            sendMessage(friendId, imgHtml[0].outerHTML, 'images');
+
+                            // 之后操作处理base64上传，省略...
+                        }
+                    } else {
+                        console.log('请上传图片');
+                    }
+                });
+
+                // 上传成功，重置file
+                file.after(file.clone().val(''));
+                file.remove();
+            });
+        });
+
+        // 搜索(这里只搜索ul中的内容)
+        $('#keywords').keydown(function (event) {
+            if (event.keyCode == 13) {
+                var keyword = $(this).val();
+                $('.lyear-chat-users').find('.list-group-item').hide();
+                $('.lyear-chat-users').find(".list-chat-user-name").filter(":Contains(" + keyword + ")").parents('.list-group-item').fadeIn(300);
+            }
+        });
+
+        // 点击修改我的签名
+        $('.my-autograph').on('click', function () {
+            var $this = $(this),
+                txt = $this.text(),
+                input = $("<input type='text' class='edit-autograph' value='" + txt + "'/>");
+
+            $this.html(input);
+            input.click(function () {
+                return false;
+            });
+            input.trigger("focus");
+            //文本框失去焦点后提交内容，重新变为文本
+            input.blur(function () {
+                var newtxt = $(this).val();
+                if (newtxt != txt) {
+                    // 假装ajax调用后台修改成功
+                    $this.html(newtxt);
+                } else {
+                    $this.html(newtxt);
+                }
+            });
+        });
+
+        // 点击展开用户列表
+        $('.lyear-chat-toggler').on('click', function () {
+            $('.lyear-chat-side').toggleClass('lyear-chat-user-open');
+        })
+    });
+</script>
+<script>
+    // 将时间戳转化为时间格式
+    function getLocalTime(time) {
+        var date = new Date(time + 8 * 3600 * 1000);
+        return date.toJSON().substr(0, 19).replace('T', ' ');
+    }
+</script>
+
+
+
+</body>
+</html>
