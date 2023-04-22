@@ -11,6 +11,7 @@
 - 然后需要发布项目到服务器上的可参考我写的这篇文章：https://blog.csdn.net/wyf2017/article/details/125972584
 
 <br>
+
 注意事项
 - 下载了终版需要注意的点是需要在application.properties修改两个地方
 - # MailProperties(邮箱相关属性配置) 这里我在终版里面空出来了需要改成你自己的
